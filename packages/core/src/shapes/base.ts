@@ -1,13 +1,16 @@
+import type { Engine } from '../main'
 import type { LifeCyclesType } from '../types/lifecycles'
-import type { BaseShapeOptions, ShapePosition, ShapeType } from '../types/shape'
+import type { BaseShapeOptions, RectOptions, ShapePosition, ShapeType } from '../types/shape'
 
 export abstract class BaseShape <I extends Object = {}> {
   public name!: string
   public type!: ShapeType
-  public _zIndex!: number
+  public _zIndex = 0
+  public zIndex!: number
   public injectionInfo!: I
   public shapePosition: ShapePosition = {}
   private _lifeCycle: LifeCyclesType = {}
+  public abstract dom: HTMLElement
 
   public constructor(options: BaseShapeOptions<I>) {
     this.initBasicAttr(options)
@@ -16,11 +19,11 @@ export abstract class BaseShape <I extends Object = {}> {
   initBasicAttr(options: BaseShapeOptions<I>) {
     this.name = options.name || ''
     this.type = options.type || 'null'
-    this._zIndex = options._zIndex || 0
+    this.zIndex = options.zIndex || 0
     this.injectionInfo = options.injectionInfo || {} as I
   }
 
-  abstract initShapePosition(): void
+  abstract initShapePosition(options: RectOptions<I>): void
 
-  abstract render(): void
+  abstract render(svg: Engine): void
 }
