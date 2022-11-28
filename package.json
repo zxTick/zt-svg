@@ -28,6 +28,9 @@
     "prepare": "husky install",
     "coverage": "vitest run --coverage"
   },
+  "dependencies": {
+    "@ztsvg/core": "workspace:*"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.2",
     "@commitlint/cli": "^17.1.2",
@@ -58,8 +61,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "dependencies": {
-    "@ztsvg/core": "workspace:*"
   }
 }

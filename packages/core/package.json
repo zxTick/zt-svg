@@ -2,13 +2,9 @@
   "name": "@ztsvg/core",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "unbuild"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
+  "keywords": [],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -17,6 +13,7 @@
       "import": "./dist/index.mjs"
     }
   },
+  "main": "index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "typesVersions": {
@@ -29,5 +26,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "scripts": {
+    "build": "unbuild"
+  }
 }
