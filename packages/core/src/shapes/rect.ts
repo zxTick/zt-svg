@@ -21,6 +21,7 @@ export class Rect<I extends object = {}> extends BaseShape<I> {
       bottomCenter: { x: x + width / 2, y: y + height },
       leftCenter: { x, y: y + height / 2 },
       rightCenter: { x: x + width, y: y + height / 2 },
+      center: { x: x + width / 2, y: y + height / 2 },
     }
   }
 

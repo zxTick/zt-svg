@@ -2,6 +2,7 @@
 <script lang='ts' setup>
 import { onMounted } from 'vue'
 import { Engine, Rect as Re } from '@ztsvg/core'
+import animejs from 'animejs'
 let e: Engine | null = null
 
 const rect = new Re({
@@ -17,8 +18,8 @@ const rect = new Re({
 })
 const rect2 = new Re({
   name: '22',
-  width: 120,
-  height: 120,
+  width: 100,
+  height: 100,
   x: 20,
   y: 20,
   attr: {
@@ -31,7 +32,17 @@ onMounted(() => {
     target: document.getElementById('sss') as any,
     baseEvents: ['click'],
     triggerEvent(a, b, c) {
-      console.log('[  ] >', { a, b, c })
+      const { x, y } = c.shapePosition.topLeft
+      console.log({ x, y })
+
+      animejs({
+        targets: c.dom,
+        width: 30,
+        height: 30,
+        x: (x + 70) / 2,
+        y: (y + 70) / 2,
+        duration: 1000,
+      })
     },
   })
   e = engine
