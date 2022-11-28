@@ -1,4 +1,8 @@
+import type { Rect } from '../shapes/rect'
+import type { EventName } from './events'
 import type { LifeCyclesType } from './lifecycles'
+
+export type Shape = Rect
 
 export type ShapeType = 'rect' | 'circle' | 'ellipse' | 'line' | 'text' | 'null'
 
@@ -9,11 +13,12 @@ export interface Position {
   y: number
 }
 
-export interface BaseShapeOptions<I extends object> extends Partial<wh> {
+export interface BaseShapeOptions<I extends object> extends Partial<wh>, LifeCyclesType {
   name?: string
   type?: ShapeType
   zIndex?: number
   injectionInfo?: I
+  events?: EventName[]
 }
 
 export interface wh {

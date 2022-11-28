@@ -1,66 +1,57 @@
 import type { Engine } from './main'
-import type { LifeCycler, LifeCyclesType, ShapeLifeCycler } from './types/lifecycles'
+import type { LifeCyclesType, ShapeLifeCycler } from './types/lifecycles'
+import type { Shape } from './types/shape'
 
-export class LifeCycles {
-  public lifeCycler: LifeCycler = {}
+export class ShapeLifeCycles {
   public shapeLifeCycler: ShapeLifeCycler = {}
 
   constructor(public svg: Engine) {
-
   }
 
-  addLifeCycle(name: string, lifeCycle: LifeCyclesType) {
-    this.shapeLifeCycler[name] = lifeCycle
-    this.mergeLifeCycler(this.lifeCycler, lifeCycle)
+  addShapeLifeCycle(shape: Shape) {
+    const { name, _lifeCycle } = shape
+    this.shapeLifeCycler[name] = _lifeCycle
   }
 
-  mergeLifeCycler(lifeCycler: LifeCycler, lifeCycle: LifeCyclesType) {
-    Object.keys(lifeCycle).forEach((key) => {
-      const _key = key as keyof LifeCyclesType
-      const _val = lifeCycle[_key]
-      if (!_val)
-        return
-      const _mergeVal = Array.isArray(_val) ? _val : [_val]
-      if (!_mergeVal)
-        return
-
-      if (!lifeCycler[_key])
-        lifeCycler[_key] = []
-
-      if (lifeCycler[_key])
-        lifeCycler[_key] = [...lifeCycler[_key]!, ..._mergeVal]
-
-      else
-        lifeCycler[_key] = [..._mergeVal]
-    })
+  removeShapeLifeCycle(shape: Shape) {
+    const { name } = shape
+    const lifeCycles = this.shapeLifeCycler[name]
+    if (lifeCycles)
+      delete this.shapeLifeCycler[name]
   }
 
-  triggerLifeCycleAll(key: keyof LifeCyclesType) {
-    const lifeCycler = this.lifeCycler[key]
-    if (!lifeCycler)
-      return
-
-    lifeCycler.forEach((lifeCycle) => {
-      lifeCycle()
-    })
+  runOnBeforeRender(shape?: Shape, ...args: any[]) {
+    this.runLifeCycle('onBeforeRender', shape, ...args)
   }
 
-  triggerLifeCycleShape(key: keyof LifeCyclesType, name: string) {
-    const lifeCycler = this.shapeLifeCycler[name]
-    if (!lifeCycler)
-      return
+  runOnRender(shape?: Shape, ...args: any[]) {
+    this.runLifeCycle('onRender', shape, ...args)
+  }
 
-    const lifeCycle = lifeCycler[key]
-    if (!lifeCycle)
-      return
+  runOnUpdate(shape?: Shape, ...args: any[]) {
+    this.runLifeCycle('onUpdate', shape, ...args)
+  }
 
-    if (Array.isArray(lifeCycle)) {
-      lifeCycle.forEach((lifeCycle) => {
-        lifeCycle()
+  runOnDestruction(shape?: Shape, ...args: any[]) {
+    this.runLifeCycle('onDestruction', shape, ...args)
+  }
+
+  runOnZIndexChange(shape?: Shape, ...args: any[]) {
+    this.runLifeCycle('onZIndexChange', shape, ...args)
+  }
+
+  runLifeCycle(key: keyof LifeCyclesType, shape?: Shape, ...args: any[]) {
+    if (!shape) {
+      Object.values(this.shapeLifeCycler).forEach((lifeCycles) => {
+        const lifeCycle = lifeCycles[key]
+        if (lifeCycle)
+          lifeCycle(...args)
       })
     }
     else {
-      lifeCycle()
+      const lifeCycle = this.shapeLifeCycler[shape.name][key]
+      if (lifeCycle)
+        lifeCycle(...args)
     }
   }
 }

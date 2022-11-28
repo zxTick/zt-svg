@@ -15,7 +15,6 @@
     "url": "https://github.com/TickHeart/starter-ts/issues"
   },
   "keywords": [],
-  
   "scripts": {
     "stub": "unbuild --stub",
     "build": "unbuild",
@@ -53,5 +52,8 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "@ztsvg/core": "workspace:*"
   }
 }

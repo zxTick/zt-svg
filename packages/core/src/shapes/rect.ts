@@ -26,17 +26,19 @@ export class Rect<I extends object = {}> extends BaseShape<I> {
 
   render(svg: Engine): void {
     if (!this.dom) {
-      const rectDom = document.createElement('rect')
-      this.dom = rectDom
+      const rectDom = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      this.dom = rectDom as any
     }
 
-    const { width, height } = this.shapePosition
-    const { attr } = this.options
+    const { attr, width, height, x, y } = this.options
     const { dom } = this
     const info = {
       width,
       height,
+      x,
+      y,
       ...attr,
+      'data-key': this.name,
     }
     Object.keys(info).forEach((key) => {
       key = key as keyof typeof info
