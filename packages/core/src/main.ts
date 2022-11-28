@@ -34,6 +34,7 @@ export class Engine {
 
   initDom(options: EngineOptions) {
     const target = options.target
+
     if (!target)
       throw new Error('target is required')
 
@@ -54,15 +55,18 @@ export class Engine {
   }
 
   zindex(shape: Shape, zIndex: number) {
-    shape._zIndex = zIndex
+    this.clearView()
+    shape.zIndex = zIndex
     this.sortRenderQueue()
     this.shapeLifeCycles.runOnZIndexChange(shape, this)
     this.render()
   }
 
   render() {
+    let i = 0
     this.renderQueue.forEach((shape) => {
       this.shapeLifeCycles.runOnBeforeRender(shape, this)
+      shape._zIndex = i++
       shape.render(this)
       this.shapeLifeCycles.runOnRender(shape, this)
     })
@@ -81,6 +85,10 @@ export class Engine {
       this.delete(shape)
     })
     this.renderQueue = []
+    this.clearSvgChildren()
+  }
+
+  clearView() {
     this.clearSvgChildren()
   }
 

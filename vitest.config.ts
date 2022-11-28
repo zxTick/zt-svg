@@ -9,5 +9,6 @@ export default defineConfig({
   ],
   test: {
     includeSource: ['src/*'],
+    environment: 'happy-dom',
   },
 })

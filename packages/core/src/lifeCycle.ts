@@ -49,7 +49,10 @@ export class ShapeLifeCycles {
       })
     }
     else {
-      const lifeCycle = this.shapeLifeCycler[shape.name][key]
+      const shapeLifeCycle = this.shapeLifeCycler[shape.name]
+      if (!shapeLifeCycle)
+        return
+      const lifeCycle = shapeLifeCycle[key]
       if (lifeCycle)
         lifeCycle(...args)
     }

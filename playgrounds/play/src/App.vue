@@ -1,6 +1,30 @@
+<!-- eslint-disable no-console -->
 <script lang='ts' setup>
 import { onMounted } from 'vue'
 import { Engine, Rect as Re } from '@ztsvg/core'
+let e: Engine | null = null
+
+const rect = new Re({
+  name: '11',
+  width: 100,
+  height: 100,
+  x: 10,
+  y: 10,
+  zIndex: 10,
+  attr: {
+    fill: 'red',
+  },
+})
+const rect2 = new Re({
+  name: '22',
+  width: 120,
+  height: 120,
+  x: 20,
+  y: 20,
+  attr: {
+    fill: 'blue',
+  },
+})
 
 onMounted(() => {
   const engine = new Engine({
@@ -10,39 +34,23 @@ onMounted(() => {
       console.log('[  ] >', { a, b, c })
     },
   })
-  const rect = new Re({
-    name: '11',
-    width: 100,
-    height: 100,
-    x: 10,
-    y: 10,
-    attr: {
-      fill: 'red',
-    },
-  })
-  const rect2 = new Re({
-    name: '22',
-    width: 120,
-    height: 120,
-    x: 20,
-    y: 20,
-    attr: {
-      fill: 'blue',
-    },
-  })
+  e = engine
+
   engine.add(rect)
   engine.add(rect2)
   engine.render()
-
-  engine.zindex(rect, 9)
 })
+
+function ch() {
+  e?.zindex(rect2, 20)
+}
 </script>
 
 <template>
   <div class="">
-    <div>
+    <button @click="ch">
       1
-    </div>
+    </button>
     <svg id="sss" width="500" height="500" />
   </div>
 </template>
