@@ -14,7 +14,7 @@ export interface Position {
 }
 
 export interface BaseShapeOptions<I extends object> extends Partial<wh>, LifeCyclesType {
-  name?: string
+  name: string
   type?: ShapeType
   zIndex?: number
   injectionInfo?: I

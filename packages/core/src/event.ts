@@ -46,7 +46,7 @@ export class ShapeEvent {
 
       const triggerEvent = this.svg.triggerEvent
 
-      if (shape && triggerEvent)
+      if (shape && triggerEvent && shape.eventSet.has(e.type as EventName))
         triggerEvent(e, e.type, shape)
     }
   }
