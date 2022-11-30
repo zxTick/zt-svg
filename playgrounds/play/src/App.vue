@@ -30,19 +30,20 @@ const rect2 = new Re({
 onMounted(() => {
   const engine = new Engine({
     target: document.getElementById('sss') as any,
-    baseEvents: ['click'],
-    triggerEvent(a, b, c) {
-      const { x, y } = c.shapePosition.topLeft
-      console.log({ x, y })
+    baseEvents: ['dblclick'],
+    events: ['click'],
+    triggerEvent(a, b, c, d) {
+      // const { x, y } = c.shapePosition.topLeft
+      console.log({ a, b, c, d })
 
-      animejs({
-        targets: c.dom,
-        width: 30,
-        height: 30,
-        x: (x + 70) / 2,
-        y: (y + 70) / 2,
-        duration: 1000,
-      })
+      // animejs({
+      //   targets: c.dom,
+      //   width: 30,
+      //   height: 30,
+      //   x: (x + 70) / 2,
+      //   y: (y + 70) / 2,
+      //   duration: 1000,
+      // })
     },
   })
   e = engine

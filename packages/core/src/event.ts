@@ -4,9 +4,24 @@ import type { Shape } from './types/shape'
 
 export class ShapeEvent {
   public evener: Map<EventName, Set<Shape>> = new Map()
+  public svgEventSet!: Set<EventName>
 
   constructor(public svg: Engine) {
     this.eventHandler = this.eventHandler.bind(this)
+    this.initSvgEvents()
+  }
+
+  initSvgEvents() {
+    this.svgEventSet = new Set(this.svg.events || [])
+    this.svgEventSet.forEach((event) => {
+      this.svg.dom.addEventListener(event, this.eventHandler)
+    })
+  }
+
+  clearSvgEvents() {
+    this.svgEventSet.forEach((event) => {
+      this.svg.dom.removeEventListener(event, this.eventHandler)
+    })
   }
 
   addEvent(shape: Shape) {
@@ -18,6 +33,7 @@ export class ShapeEvent {
       }
 
       this.evener.get(event)!.add(shape)
+      this.svgEventSet.add(event)
     })
   }
 
@@ -37,8 +53,7 @@ export class ShapeEvent {
   eventHandler(e: Event) {
     const { target } = e
     if (target) {
-      if (target === this.svg.dom)
-        return
+      this.svgEventActuator(e)
       const dataKey = (target as HTMLElement).getAttribute('data-key')
       if (!dataKey)
         return
@@ -47,7 +62,17 @@ export class ShapeEvent {
       const triggerEvent = this.svg.triggerEvent
 
       if (shape && triggerEvent && shape.eventSet.has(e.type as EventName))
-        triggerEvent(e, e.type, shape)
+        triggerEvent(e, e.type, shape, 'shape')
     }
+  }
+
+  svgEventActuator(e: Event) {
+    const { target } = e
+    if (target !== this.svg.dom)
+      return
+    const triggerEvent = this.svg.triggerEvent
+    this.svg.events.includes(e.type as EventName)
+      && triggerEvent
+      && triggerEvent(e, e.type, this.svg, 'svg')
   }
 }

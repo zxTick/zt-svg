@@ -6,7 +6,7 @@ import type { Shape } from './types/shape'
 
 export class Engine {
   name!: string
-  events!: string[]
+  events!: EventName[]
   lifeCycles!: string[]
   figures!: Map<string, Shape>
   dom!: SVGAElement
@@ -104,5 +104,9 @@ export class Engine {
 
   sortRenderQueue() {
     this.renderQueue.sort((a, b) => a.zIndex - b.zIndex)
+  }
+
+  clearEvents() {
+    this.shapeEvent.clearSvgEvents()
   }
 }
