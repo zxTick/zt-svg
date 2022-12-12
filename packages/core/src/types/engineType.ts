@@ -8,3 +8,8 @@ export interface EngineOptions {
   triggerEvent?: (...args: any[]) => void
   baseEvents?: EventName[]
 }
+
+export enum BaseType {
+  SVG = 'svg',
+  SHAPE = 'shape',
+}

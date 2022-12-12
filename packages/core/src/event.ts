@@ -1,4 +1,5 @@
 import type { Engine } from './main'
+import { BaseType } from './types/engineType'
 import type { EventName } from './types/events'
 import type { Shape } from './types/shape'
 
@@ -62,7 +63,7 @@ export class ShapeEvent {
       const triggerEvent = this.svg.triggerEvent
 
       if (shape && triggerEvent && shape.eventSet.has(e.type as EventName))
-        triggerEvent(e, e.type, shape, 'shape')
+        triggerEvent(e, e.type, shape, BaseType.SHAPE)
     }
   }
 
@@ -73,6 +74,6 @@ export class ShapeEvent {
     const triggerEvent = this.svg.triggerEvent
     this.svg.events.includes(e.type as EventName)
       && triggerEvent
-      && triggerEvent(e, e.type, this.svg, 'svg')
+      && triggerEvent(e, e.type, this.svg, BaseType.SVG)
   }
 }

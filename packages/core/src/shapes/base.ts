@@ -1,15 +1,17 @@
 import type { Engine } from '../main'
+import { BaseType } from '../types/engineType'
 import type { EventName } from '../types/events'
 import type { LifeCyclesType } from '../types/lifecycles'
-import type { BaseShapeOptions, RectOptions, ShapePosition, ShapeType } from '../types/shape'
+import type { BaseShapeOptions, RectOptions, ShapeType } from '../types/shape'
 
-export abstract class BaseShape <I extends Object = {}> {
+export abstract class BaseShape<I extends Object = {}> {
+  public baseType = BaseType.SHAPE
   public name!: string
-  public type!: ShapeType
+  public abstract type: ShapeType
   public _zIndex = 0
   public zIndex!: number
   public injectionInfo!: I
-  public shapePosition: ShapePosition = {}
+  public abstract shapePosition: unknown
   public _lifeCycle: LifeCyclesType = {}
   public abstract dom: HTMLElement
   public eventSet = new Set<EventName>()

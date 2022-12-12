@@ -1,8 +1,10 @@
 import type { Engine } from '../main'
-import type { RectOptions } from '../types/shape'
+import type { RectOptions, RectPosition, ShapeType } from '../types/shape'
 import { BaseShape } from './base'
 
 export class Rect<I extends object = {}> extends BaseShape<I> {
+  public type: ShapeType = 'rect'
+  public shapePosition!: RectPosition
   public dom!: HTMLElement
 
   constructor(public options: RectOptions<I>) {

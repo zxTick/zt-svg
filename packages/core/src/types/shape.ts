@@ -6,7 +6,7 @@ export type Shape = Rect
 
 export type ShapeType = 'rect' | 'circle' | 'ellipse' | 'line' | 'text' | 'null'
 
-export type ShapePosition = Record<string, Position>
+export type RectPosition = Readonly<Record<'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'topCenter' | 'bottomCenter' | 'leftCenter' | 'rightCenter' | 'center', Position>>
 
 export interface Position {
   x: number

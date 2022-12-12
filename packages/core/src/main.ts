@@ -1,10 +1,12 @@
 import { ShapeEvent } from './event'
 import { ShapeLifeCycles } from './lifeCycle'
+import { BaseType } from './types/engineType'
 import type { EngineOptions } from './types/engineType'
 import type { EventName } from './types/events'
 import type { Shape } from './types/shape'
 
 export class Engine {
+  baseType: BaseType.SVG = BaseType.SVG
   name!: string
   events!: EventName[]
   lifeCycles!: string[]
