@@ -1,7 +1,9 @@
-# starter-ts
+# zt-svg
 
-A ts starter by developer-plus.
+A simple SVG library.
 
-## LICENSE
-
-MIT, developer-plus made with 💗.
+## install
+  
+```bash
+  pnpm install zt-svg
+```
